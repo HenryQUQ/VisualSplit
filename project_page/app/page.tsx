@@ -375,15 +375,27 @@ export default function VisualSplitPage() {
                     </div>
                 </section>
 
-                {/* Experiments: Descriptor-to-Image */}
                 <section id="experiments" className="mb-12">
                     <h3 className="text-2xl font-semibold mb-4">
-                        Descriptor-to-Image: Visual Examples
+                        Descriptor-to-Image
                     </h3>
                     <p className="mb-4 text-sm">
-                        The examples below illustrate how each descriptor contributes to the
-                        reconstruction. Replace the images with your own results placed in{" "}
-                        <code>public/</code>.
+                        <b>VisualSplit</b> treats an image as a composition of three classical, human-interpretable
+                        cues—an edge map for geometry, a segmented colour map for region-wise chroma, and a grey-level
+                        histogram for global illumination—and learns to reconstruct the scene using only these decoupled
+                        descriptors rather than raw RGB. This mask-free pre-training encourages the encoder to capture
+                        globally and locally meaningful structure from “informative absences,” yielding explicit,
+                        disentangled representations.
+                    </p>
+                    <p className="mb-4 text-sm">
+                        The example here illustrates the idea: starting from the original photo (left), we extract the
+                        three descriptors (second column); a human artist, seeing only these cues, can already infer and
+                        sketch the scene (third); our model then recovers a faithful image from exactly the same inputs
+                        (right), demonstrating that the combined descriptors are sufficient for robust reconstruction.
+                        Because each descriptor governs a different attribute—edges ≈ shape, colour segments ≈ region
+                        colours, histogram ≈ brightness—the representation is naturally interpretable and controllable,
+                        enabling independent edits of geometry, colour, or illumination in downstream generation and
+                        editing tasks.
                     </p>
 
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
@@ -437,17 +449,27 @@ export default function VisualSplitPage() {
                         </figure>
                     </div>
                     <p className="mt-2 text-xs text-center">
-                        We thank Jing Dong for the illustration; used with permission.
+                        We thank Jie Dong for the illustration; used with permission.
                     </p>
                 </section>
 
                 {/* Independent Controls */}
                 <section id="controls" className="mb-12">
                     <h3 className="text-2xl font-semibold mb-4">Independent Controls</h3>
+                    <p className="mb-4 text-sm">
+                        <b>VisualSplit</b> separates geometry, region colour, and global illumination into distinct,
+                        human-interpretable inputs—edges, segmented colours, and a grey-level histogram—and trains the
+                        encoder to reconstruct images by integrating these cues. Because edges/colours are treated as
+                        local patch inputs while the histogram conditions the model globally (via cross-attention and
+                        AdaLN-Zero), changing one descriptor steers only its corresponding attribute of the output.
+                        Empirically, varying the histogram alters brightness without affecting shape or region colours,
+                        and swapping the colour map changes chroma while preserving layout and lighting—demonstrating
+                        descriptor-level independence for controllable generation and editing.
+                    </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <ImageSlider
                             title="Illumination (Histogram)"
-                            description={`Modify only the grayscale histogram while keeping edges and colour segmentation fixed. The reconstruction changes global brightness/contrast without altering geometry or region colours.`}
+                            description={`The grey-level histogram summarizes scene brightness and contrast at a global level. Feeding a different histogram (e.g., from low/normal/high-exposure captures) shifts the reconstructed image’s illumination accordingly, while edges and colour segmentation are held fixed—so geometry and regional colour remain stable. This provides a clean “exposure dial” for editing and restoration without touching other attributes.`}
                             beforeSrc={editImages.illuminationBefore}
                             options={[
                                 {label: 'Low-light', src: editImages.illuminationLow},
@@ -457,7 +479,7 @@ export default function VisualSplitPage() {
                         />
                         <ImageSlider
                             title="Colour (Segmentation)"
-                            description={`Re-assign colours to selected segments while keeping edges and histogram fixed. The reconstruction updates region appearance consistently, leaving structure and luminance intact.`}
+                            description={`The segmented colour map assigns coherent regions to colour clusters, letting you recolour specific parts of an image independently of shape or lighting. Replacing only the colour map (e.g., from a re-balanced version of the same photo) changes regional chroma while edges and the global histogram stay intact; editing the map directly enables prompt-free, region-precise recolouring that respects boundaries. `}
                             beforeSrc={editImages.colourBefore}
                             options={[
                                 {label: 'f=0.25', src: editImages.colour025},
@@ -472,18 +494,25 @@ export default function VisualSplitPage() {
 
                 <section id="applications" className="mb-12">
                     <h3 className="text-2xl font-semibold mb-4">Applications</h3>
-
+                    <p className="mb-4 text-sm">
+                        <b>VisualSplit</b> learns decoupled, human-readable controls—edges (geometry), segmented colours
+                        (regional
+                        chroma), and a grey-level histogram (global illumination)—and plugs them into modern image
+                        generators to steer both global layout and local details. In practice, we pair our global
+                        representation with the text embedding (IP-Adapter–style) and inject local representations via
+                        ControlNet into Stable Diffusion 1.5, enabling faithful reconstruction and precise attribute
+                        control
+                        from descriptors alone.
+                    </p>
                     {/* A. Visual Restoration with Diffusion Models */}
                     <div className="rounded-2xl border p-4 mb-8">
                         <h4 className="font-semibold mb-2">A. Visual Restoration with Diffusion Models</h4>
                         <p className="text-sm mb-3">
-                            VisualSplit provides structured global (<em>histogram</em>) and local (<em>edges</em>, <em>colour
-                            segments</em>)
-                            conditions that plug into Stable Diffusion 1.5. Following the paper, the global
-                            representation can be fed
-                            as an IP-Adapter–style signal while local tokens drive a ControlNet branch, yielding
-                            faithful reconstructions
-                            without relying on prompts.
+                            Using only edge, colour-map, and histogram inputs, our guidance restores images with
+                            substantially higher fidelity than ControlNet, T2I-Adapter, and ControlNet++. This shows
+                            that
+                            descriptor-structured conditions recover both global appearance and fine structure more
+                            reliably than raw controls.
                         </p>
                         {/* Descriptor inputs */}
                         <figure className="mx-auto rounded-xl border p-2 md:w-1/3 flex flex-col items-center">
@@ -500,21 +529,28 @@ export default function VisualSplitPage() {
                                           gt={appAssets.restorationGT}/>
 
                         {/* Metrics table (from Table 3) */}
-                        <RestorationTable />
+                        <RestorationTable/>
                     </div>
 
                     {/* B. Descriptor-Guided Editing (No retraining) */}
                     <div className="rounded-2xl border p-4 mb-8">
                         <h4 className="font-semibold mb-2">B. Descriptor-Guided Editing (No Retraining)</h4>
                         <p className="text-sm mb-3">
-                            Editing is performed by modifying individual descriptors while keeping others fixed. Below
-                            we show two independent edits: altering the <em>colour segmentation map</em> for region
-                            recolouring and changing the <em>gray-level histogram</em> for global luminance. Other
-                            descriptors remain unchanged, preserving geometry and non-target attributes.
+                            Because each descriptor governs a different attribute, editing is as simple as modifying
+                            that input and re-running the generator—no model fine-tuning or prompts required. Swapping
+                            the colour map alters regional colours while preserving shape and lighting; changing only
+                            the histogram shifts exposure/contrast without touching geometry or chroma. Qualitative and
+                            user-study results confirm higher naturalness, accuracy, and consistency than prompt-based
+                            baselines.
                         </p>
 
 
                         <h5 className="font-medium mb-2">1. Gray-Level Histogram Editing</h5>
+                        <p className="text-sm mb-3">
+                            We edit illumination by adjusting the grey-level histogram or applying histogram
+                            equalisation,
+                            then condition the generator with the updated histogram while keeping edges/colours fixed.
+                        </p>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                             <figure className="rounded-xl border p-2">
                                 <img src={appAssets.editingEdgeHist} alt="Edge map"
@@ -532,9 +568,15 @@ export default function VisualSplitPage() {
                                 <figcaption className="mt-2 text-center text-xs">Ground Truth</figcaption>
                             </figure>
                         </div>
-                        <HistogramSlider before={appAssets.editingHistBefore} options={histogramOptions} />
+                        <HistogramSlider before={appAssets.editingHistBefore} options={histogramOptions}/>
 
                         <h5 className="font-medium mb-2">2. Colour Map Editing</h5>
+                        <p className="text-sm mb-3">
+                            To recolour specific regions, we modify only the segmented colour map (e.g., re-balanced hues or
+                            hand-edited segments). The diffusion model recolours those regions, respecting edge boundaries
+                            and the original illumination, and requires no text prompts—unlike baselines that need prompt
+                            engineering.
+                        </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                             <figure className="rounded-xl border p-2">
                                 <img src={appAssets.editingEdgeColour} alt="Edge map"
@@ -587,7 +629,7 @@ export default function VisualSplitPage() {
 
                 {/* BibTeX */}
                 <section id="bibtex" className="mb-12">
-                    <h3 className="text-2xl font-semibold mb-4">BibTeX</h3>
+                <h3 className="text-2xl font-semibold mb-4">BibTeX</h3>
                     <pre
                         id="bibtex"
                         className="bg-gray-50 p-3 rounded-lg overflow-x-auto text-xs"

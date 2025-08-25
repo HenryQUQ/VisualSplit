@@ -51,7 +51,7 @@ export default function OtherModelSlider({ options, ours, gt }: OtherModelSlider
             alt="Ground truth"
             className="w-full object-cover rounded-lg"
           />
-          <figcaption className="mt-1 text-center text-xs">GT</figcaption>
+          <figcaption className="mt-1 text-center text-xs">Original Image</figcaption>
         </figure>
       </div>
       <input
