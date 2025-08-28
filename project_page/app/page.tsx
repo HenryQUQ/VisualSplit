@@ -234,6 +234,7 @@ export default function VisualSplitPage() {
                             The 36th British Machine Vision Conference (BMVC 2025)
                         </a>
                     </p>
+                    <blockquote className="mt-4 italic text-sm sm:text-base"> &ldquo;To see a world in a grain of sand.&rdquo; — William Blake </blockquote>
                     <div className="mt-4 flex flex-wrap justify-center gap-3">
                         <a
                             href={links.paperPdf}
