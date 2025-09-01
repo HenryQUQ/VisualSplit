@@ -200,8 +200,8 @@ export default function VisualSplitPage() {
                     className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white text-center px-4">
                     <h1 className="text-3xl sm:text-5xl font-bold mb-3">VisualSplit</h1>
                     <h2 className="text-lg sm:text-2xl max-w-3xl">
-                        Exploring Image Representation with Decoupled Classical Visual
-                        Descriptors
+                        Exploring Image Representation <br/>
+                        with Decoupled Classical Visual Descriptors
                     </h2>
                     <p className="mt-3 text-sm sm:text-base font-medium">
                         {authors.map((a, idx) => (
