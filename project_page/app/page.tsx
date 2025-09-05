@@ -104,7 +104,7 @@ export default function VisualSplitPage() {
         paperPdf: `${root_path}/VisualSplit_BMVC2025.pdf`,
         suppPdf: `${root_path}/VisualSplit_supplementary.pdf`,
         arXiv: "#", // e.g., "/abs/xxxx.xxxxx"
-        code: "#", // e.g., "https://github.com/your-repo/visualsplit"
+        code: "https://github.com/HenryQUQ/VisualSplit",
         models: "https://huggingface.co/quchenyuan/VisualSplit",
         dataset: "#",
         poster: `${root_path}/VisualSplit_poster.pdf`,
