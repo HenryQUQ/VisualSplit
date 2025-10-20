@@ -103,7 +103,7 @@ export default function VisualSplitPage() {
     const links = {
         paperPdf: `${root_path}/VisualSplit_BMVC2025.pdf`,
         suppPdf: `${root_path}/VisualSplit_supplementary.pdf`,
-        arXiv: "#", // e.g., "/abs/xxxx.xxxxx"
+        arXiv: "https://arxiv.org/abs/2510.14536", // e.g., "/abs/xxxx.xxxxx"
         code: "https://github.com/HenryQUQ/VisualSplit",
         models: "https://huggingface.co/quchenyuan/VisualSplit",
         dataset: "#",
@@ -253,8 +253,7 @@ export default function VisualSplitPage() {
                         <a
                             href={links.arXiv}
                             target="_blank"
-                            aria-disabled="true"
-                            className="rounded-full bg-white/80 px-4 py-1.5 text-sm font-semibold text-gray-900 opacity-50 cursor-not-allowed pointer-events-none"
+                            className="rounded-full bg-white/95 px-4 py-1.5 text-sm font-semibold text-gray-900 hover:bg-white"
                         >
                             📚 arXiv
                         </a>
