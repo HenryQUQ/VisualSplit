@@ -19,19 +19,19 @@ export default function HistogramSlider({before, options}: HistogramSliderProps)
         <div className="rounded-xl border p-2">
             <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="rounded-xl border">
-                    <figure className="p-2">
+                    <figure className="p-2 flex flex-col items-center">
                         <img src={before} alt="Gray-level histogram (Before)"
-                             className="w-full object-cover rounded-lg"/>
+                             className="rounded-lg max-w-full object-contain"/>
                         <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram (Before)</figcaption>
                     </figure>
-                    <figure className="p-2">
+                    <figure className="p-2 flex flex-col items-center">
                         <img src={options[index].histSrc} alt="Gray-level histogram (After)"
-                             className="w-full object-cover rounded-lg"/>
+                             className="rounded-lg max-w-full object-contain"/>
                         <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram (After)</figcaption>
                     </figure>
                 </div>
-                <figure className="rounded-xl border p-2">
-                    <img src={options[index].oursSrc} alt="Ours" className="w-full object-cover rounded-lg"/>
+                <figure className="rounded-xl border p-2 flex flex-col items-center">
+                    <img src={options[index].oursSrc} alt="Ours" className="rounded-lg max-w-full object-contain"/>
                     <figcaption className="mt-2 text-center text-xs">Ours</figcaption>
                 </figure>
             </div>
@@ -54,4 +54,3 @@ export default function HistogramSlider({before, options}: HistogramSliderProps)
         </div>
     );
 }
-

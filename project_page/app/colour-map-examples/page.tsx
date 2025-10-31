@@ -28,14 +28,14 @@ function pickByPattern(files: string[], patterns: RegExp[]): string | undefined 
 
 export default function ColourMapExamples() {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-  const fsBase = path.join(process.cwd(), 'public', 'colour-map');
+  const fsBase = path.join(process.cwd(), 'public', 'images', 'gallery', 'colour-map');
   const { groups, rootFiles } = listGroups(fsBase);
 
   const groupNames = groups.length > 0 ? groups : (rootFiles.some(isImageFile) ? ['.'] : []);
 
   const sections = groupNames.map(group => {
     const fsDir = group === '.' ? fsBase : path.join(fsBase, group);
-    const webDir = group === '.' ? `${basePath}/colour-map` : `${basePath}/colour-map/${group}`;
+    const webDir = group === '.' ? `${basePath}/images/gallery/colour-map` : `${basePath}/images/gallery/colour-map/${group}`;
     const files = fs.existsSync(fsDir) ? fs.readdirSync(fsDir).filter(isImageFile) : [];
 
     const items: ExampleItem[] = [];
@@ -85,7 +85,7 @@ export default function ColourMapExamples() {
     <main className="mx-auto max-w-5xl py-10 px-4 sm:px-6 lg:px-8 text-gray-800">
       <h1 className="text-2xl font-semibold mb-4">Colour Map Editing Examples</h1>
       {sections.length === 0 ? (
-        <p className="text-sm text-gray-500">No examples found under <code>public/colour-map</code>.</p>
+        <p className="text-sm text-gray-500">No examples found under <code>public/images/gallery/colour-map</code>.</p>
       ) : (
         sections.map(({ group, items }) => (
           <section key={group} className="mb-8">

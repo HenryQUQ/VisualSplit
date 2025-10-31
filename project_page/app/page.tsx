@@ -29,8 +29,9 @@ export const metadata = {
 const root_path = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 // Static assets. Replace these with your own files under `public/`.
-const hero_bg_path = `${root_path}/visualsplit_hero.jpg`;
-const framework_path = `${root_path}/framework.png`;
+const hero_bg_path = `${root_path}/images/hero/visualsplit_hero.jpg`;
+const framework_path = `${root_path}/images/figures/framework.png`;
+const presentationVideoPath = `${root_path}/videos/presentation/0873_presentation_1080p.mp4`;
 
 // Author and affiliation data models.
 interface Author {
@@ -77,72 +78,72 @@ type View = "original" | "edges" | "segmentation" | "histogram" | "artist" | "ou
 export default function VisualSplitPage() {
     // Demo images (place your generated examples under `public/`).
     const experimentImages: Record<View, string> = {
-        original: `${root_path}/exp_original.png`,
-        edges: `${root_path}/exp_edge.png`,
-        segmentation: `${root_path}/exp_segmentation.png`,
-        histogram: `${root_path}/exp_histogram.png`,
-        artist: `${root_path}/exp_artist.png`,
-        output: `${root_path}/exp_output.png`,
+        original: `${root_path}/images/experiments/descriptor/exp_original.png`,
+        edges: `${root_path}/images/experiments/descriptor/exp_edge.png`,
+        segmentation: `${root_path}/images/experiments/descriptor/exp_segmentation.png`,
+        histogram: `${root_path}/images/experiments/descriptor/exp_histogram.png`,
+        artist: `${root_path}/images/experiments/descriptor/exp_artist.png`,
+        output: `${root_path}/images/experiments/descriptor/exp_output.png`,
     };
 
     // Optional: additional static figures showing independent control/editing.
     const editImages = {
-        illuminationBefore: `${root_path}/edit_illumination_before.png`,
-        illuminationLow: `${root_path}/edit_illumination_low.png`,
-        illuminationNormal: `${root_path}/edit_illumination_normal.png`,
-        illuminationHigh: `${root_path}/edit_illumination_high.png`,
-        colourBefore: `${root_path}/edit_colour_before.jpg`,
-        colour025: `${root_path}/edit_colour_0.25.jpg`,
-        colour075: `${root_path}/edit_colour_0.75.jpg`,
-        colour100: `${root_path}/edit_colour_1.0.jpg`,
-        colour125: `${root_path}/edit_colour_1.25.jpg`,
-        colour175: `${root_path}/edit_colour_1.75.jpg`,
+        illuminationBefore: `${root_path}/images/editing/illumination/edit_illumination_before.png`,
+        illuminationLow: `${root_path}/images/editing/illumination/edit_illumination_low.png`,
+        illuminationNormal: `${root_path}/images/editing/illumination/edit_illumination_normal.png`,
+        illuminationHigh: `${root_path}/images/editing/illumination/edit_illumination_high.png`,
+        colourBefore: `${root_path}/images/editing/colour-adjust/edit_colour_before.jpg`,
+        colour025: `${root_path}/images/editing/colour-adjust/edit_colour_0.25.jpg`,
+        colour075: `${root_path}/images/editing/colour-adjust/edit_colour_0.75.jpg`,
+        colour100: `${root_path}/images/editing/colour-adjust/edit_colour_1.0.jpg`,
+        colour125: `${root_path}/images/editing/colour-adjust/edit_colour_1.25.jpg`,
+        colour175: `${root_path}/images/editing/colour-adjust/edit_colour_1.75.jpg`,
     };
 
     // Replace with your final links (PDF/code/models/dataset).
     const links = {
-        paperPdf: `${root_path}/VisualSplit_BMVC2025.pdf`,
-        suppPdf: `${root_path}/VisualSplit_supplementary.pdf`,
+        paperPdf: `${root_path}/docs/papers/VisualSplit_BMVC2025.pdf`,
+        suppPdf: `${root_path}/docs/supplementary/VisualSplit_supplementary.pdf`,
         arXiv: "https://arxiv.org/abs/2510.14536", // e.g., "/abs/xxxx.xxxxx"
         code: "https://github.com/HenryQUQ/VisualSplit",
         models: "https://huggingface.co/quchenyuan/VisualSplit",
         dataset: "#",
-        poster: `${root_path}/VisualSplit_poster.pdf`,
+        posterSection: "#poster",
+        posterPdf: `${root_path}/docs/posters/0873_poster.pdf`,
         bibtexAnchor: "#bibtex",
     };
     const appAssets = {
         // Visual restoration descriptors and outputs
-        restorationCond: `${root_path}/apps_restoration_condition.png`,
-        restorationOurs: `${root_path}/apps_restoration_ours.png`,
-        restorationGT: `${root_path}/apps_restoration_groundtruth.png`,
+        restorationCond: `${root_path}/images/restoration/apps/apps_restoration_condition.png`,
+        restorationOurs: `${root_path}/images/restoration/apps/apps_restoration_ours.png`,
+        restorationGT: `${root_path}/images/restoration/apps/apps_restoration_groundtruth.png`,
 
         // Other model results
-        cnNoPrompt: `${root_path}/apps_restoration_controlnet_noprompt.png`,
-        cnPrompt: `${root_path}/apps_restoration_controlnet_prompt.png`,
-        t2iNoPrompt: `${root_path}/apps_restoration_t2iadapter_noprompt.png`,
-        t2iPrompt: `${root_path}/apps_restoration_t2iadapter_prompt.png`,
-        cnppNoPrompt: `${root_path}/apps_restoration_controlnetpp_noprompt.png`,
-        cnppPrompt: `${root_path}/apps_restoration_controlnetpp_prompt.png`,
+        cnNoPrompt: `${root_path}/images/restoration/apps/apps_restoration_controlnet_noprompt.png`,
+        cnPrompt: `${root_path}/images/restoration/apps/apps_restoration_controlnet_prompt.png`,
+        t2iNoPrompt: `${root_path}/images/restoration/apps/apps_restoration_t2iadapter_noprompt.png`,
+        t2iPrompt: `${root_path}/images/restoration/apps/apps_restoration_t2iadapter_prompt.png`,
+        cnppNoPrompt: `${root_path}/images/restoration/apps/apps_restoration_controlnetpp_noprompt.png`,
+        cnppPrompt: `${root_path}/images/restoration/apps/apps_restoration_controlnetpp_prompt.png`,
 
         // Descriptor-guided editing
-        editingEdgeColour: `${root_path}/apps_editing_colour_edge.png`,
-        editingHistColour: `${root_path}/apps_editing_colour_hist.png`,
-        editingEdgeHist: `${root_path}/apps_editing_hist_edge.png`,
-        editingOrig: `${root_path}/apps_editing_original.png`,
-        editingColourOrig: `${root_path}/apps_editing_colour_original.png`,
-        editingSegColourOrig: `${root_path}/apps_editing_colour_seg_original.png`,
-        editingSegColourEdited: `${root_path}/apps_editing_colour_seg_edited.png`,
-        editingSegHist: `${root_path}/apps_editing_hist_seg.png`,
-        editingHistBefore: `${root_path}/apps_editing_hist_before.png`,
-        editingHistAfter: `${root_path}/apps_editing_hist_after.png`,
-        editingColourOut: `${root_path}/apps_editing_colour_output.png`,
+        editingEdgeColour: `${root_path}/images/editing/apps/apps_editing_colour_edge.png`,
+        editingHistColour: `${root_path}/images/editing/apps/apps_editing_colour_hist.png`,
+        editingEdgeHist: `${root_path}/images/editing/apps/apps_editing_hist_edge.png`,
+        editingOrig: `${root_path}/images/editing/apps/apps_editing_original.png`,
+        editingColourOrig: `${root_path}/images/editing/apps/apps_editing_colour_original.png`,
+        editingSegColourOrig: `${root_path}/images/editing/apps/apps_editing_colour_seg_original.png`,
+        editingSegColourEdited: `${root_path}/images/editing/apps/apps_editing_colour_seg_edited.png`,
+        editingSegHist: `${root_path}/images/editing/apps/apps_editing_hist_seg.png`,
+        editingHistBefore: `${root_path}/images/editing/apps/apps_editing_hist_before.png`,
+        editingColourOut: `${root_path}/images/editing/apps/apps_editing_colour_output.png`,
         // Other model editing results
-        editCnNoPrompt: `${root_path}/apps_editing_controlnet_noprompt.png`,
-        editCnPrompt: `${root_path}/apps_editing_controlnet_prompt.png`,
-        editT2iNoPrompt: `${root_path}/apps_editing_t2iadapter_noprompt.png`,
-        editT2iPrompt: `${root_path}/apps_editing_t2iadapter_prompt.png`,
-        editCnppNoPrompt: `${root_path}/apps_editing_controlnetpp_noprompt.png`,
-        editCnppPrompt: `${root_path}/apps_editing_controlnetpp_prompt.png`,
+        editCnNoPrompt: `${root_path}/images/editing/apps/apps_editing_controlnet_noprompt.png`,
+        editCnPrompt: `${root_path}/images/editing/apps/apps_editing_controlnet_prompt.png`,
+        editT2iNoPrompt: `${root_path}/images/editing/apps/apps_editing_t2iadapter_noprompt.png`,
+        editT2iPrompt: `${root_path}/images/editing/apps/apps_editing_t2iadapter_prompt.png`,
+        editCnppNoPrompt: `${root_path}/images/editing/apps/apps_editing_controlnetpp_noprompt.png`,
+        editCnppPrompt: `${root_path}/images/editing/apps/apps_editing_controlnetpp_prompt.png`,
     };
 
     const otherModelOptions = [
@@ -182,8 +183,8 @@ export default function VisualSplitPage() {
     const histogramLevels = ["-3", "-2", "-1", "0", "1", "2", "3", "equalization"];
     const histogramOptions = histogramLevels.map((level) => ({
         label: level,
-        histSrc: `${root_path}/apps_editing_hist_after_${level}.png`,
-        oursSrc: `${root_path}/apps_editing_output_${level}.png`,
+        histSrc: `${root_path}/images/editing/apps/apps_editing_hist_after_${level}.png`,
+        oursSrc: `${root_path}/images/editing/apps/apps_editing_output_${level}.png`,
     }));
     return (
         <>
@@ -272,15 +273,34 @@ export default function VisualSplitPage() {
                             🤗 Models
                         </a>
                         <a
-                            href="#poster"
-                            aria-disabled="true"
-                            className="rounded-full bg-white/80 px-4 py-1.5 text-sm font-semibold text-gray-900 opacity-50 cursor-not-allowed pointer-events-none"
+                            href={links.posterSection}
+                            className="rounded-full bg-white/80 px-4 py-1.5 text-sm font-semibold text-gray-900 hover:bg-white"
                         >
                             🖼️ Poster
                         </a>
                     </div>
                 </div>
             </header>
+
+            <section id="presentation" className="bg-gray-50/70">
+                <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 text-gray-800">
+                    <h3 className="text-2xl font-semibold mb-4 text-center">BMVC 2025 Presentation</h3>
+                    <video
+                        controls
+                        preload="metadata"
+                        className="w-full rounded-2xl shadow-lg border border-gray-200"
+                    >
+                        <source src={presentationVideoPath} type="video/mp4"/>
+                        Your browser does not support embedded videos.{" "}
+                        <a
+                            href={presentationVideoPath}
+                            className="underline"
+                        >
+                            Download the presentation instead.
+                        </a>
+                    </video>
+                </div>
+            </section>
 
             <main className="mx-auto max-w-5xl py-10 px-4 sm:px-6 lg:px-8 text-gray-800">
                 {/* Introduction */}
@@ -568,7 +588,9 @@ export default function VisualSplitPage() {
                                 <figcaption className="mt-2 text-center text-xs">Ground Truth</figcaption>
                             </figure>
                         </div>
-                        <HistogramSlider before={appAssets.editingHistBefore} options={histogramOptions}/>
+                        <div className="mb-6">
+                            <HistogramSlider before={appAssets.editingHistBefore} options={histogramOptions}/>
+                        </div>
 
                         <h5 className="font-medium mb-2">2. Colour Map Editing</h5>
                         <p className="text-sm mb-3">
@@ -599,13 +621,18 @@ export default function VisualSplitPage() {
                                 <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram</figcaption>
                             </figure>
                         </div>
-                        <OtherModelSlider options={editingModelOptions} ours={appAssets.editingColourOut}
-                                          gt={appAssets.editingColourOrig}/>
-                        <div className="text-right mb-4">
-                            <Link href="/colour-map-examples">
-                                <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md">
-                                    View more examples
-                                </button>
+                        <div className="mb-6">
+                            <OtherModelSlider options={editingModelOptions} ours={appAssets.editingColourOut}
+                                              gt={appAssets.editingColourOrig}/>
+                        </div>
+                        <div className="text-right">
+                            <Link
+                                href="/colour-map-examples"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-block px-4 py-2 text-sm bg-blue-600 text-white rounded-md"
+                            >
+                                View more examples
                             </Link>
                         </div>
 
@@ -615,17 +642,21 @@ export default function VisualSplitPage() {
                 </section>
 
 
-                {/*/!* Poster *!/*/}
-                {/*<section id="poster" className="mb-12">*/}
-                {/*    <h3 className="text-2xl font-semibold mb-4">Poster</h3>*/}
-                {/*    <div className="w-full h-[800px]">*/}
-                {/*        <iframe*/}
-                {/*            src={links.poster}*/}
-                {/*            title="VisualSplit poster"*/}
-                {/*            className="w-full h-full border rounded"*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</section>*/}
+                <section id="poster" className="mb-12">
+                    <h3 className="text-2xl font-semibold mb-4">Poster</h3>
+                    <div className="mx-auto max-w-3xl">
+                        <div
+                            className="relative w-full rounded-2xl border overflow-hidden"
+                            style={{aspectRatio: "841 / 1189"}}
+                        >
+                            <iframe
+                                src={links.posterPdf}
+                                title="VisualSplit poster"
+                                className="absolute inset-0 h-full w-full"
+                            />
+                        </div>
+                    </div>
+                </section>
 
                 {/* BibTeX */}
                 <section id="bibtex" className="mb-12">
