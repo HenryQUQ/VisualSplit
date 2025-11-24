@@ -77,13 +77,15 @@ export default function RestorationTable() {
       </div>
       <p className="text-[11px] mt-2 text-gray-500">Prompts are not required for our method.</p>
       <div className="text-right mt-4">
-        <Link href="/restoration-examples">
-          <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md">
-            View more examples
-          </button>
+        <Link
+          href="/restoration-examples"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-block px-4 py-2 text-sm bg-blue-600 text-white rounded-md"
+        >
+          View more examples
         </Link>
       </div>
     </div>
   );
 }
-

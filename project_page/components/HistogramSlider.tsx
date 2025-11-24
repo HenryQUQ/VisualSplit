@@ -17,22 +17,23 @@ export default function HistogramSlider({before, options}: HistogramSliderProps)
     const [index, setIndex] = useState(0);
     return (
         <div className="rounded-xl border p-2">
-            <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="rounded-xl border">
-                    <figure className="p-2 flex flex-col items-center">
+            <div className="grid grid-cols-2 gap-3 mb-4 items-stretch">
+                <div className="rounded-xl border flex flex-col gap-3">
+                    <figure className="p-3 flex flex-1 flex-col items-center justify-center text-center">
                         <img src={before} alt="Gray-level histogram (Before)"
-                             className="rounded-lg max-w-full object-contain"/>
-                        <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram (Before)</figcaption>
+                             className="rounded-lg max-h-48 w-full object-contain"/>
+                        <figcaption className="mt-2 text-xs">Gray-Level Histogram (Before)</figcaption>
                     </figure>
-                    <figure className="p-2 flex flex-col items-center">
+                    <figure className="p-3 flex flex-1 flex-col items-center justify-center text-center">
                         <img src={options[index].histSrc} alt="Gray-level histogram (After)"
-                             className="rounded-lg max-w-full object-contain"/>
-                        <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram (After)</figcaption>
+                             className="rounded-lg max-h-48 w-full object-contain"/>
+                        <figcaption className="mt-2 text-xs">Gray-Level Histogram (After)</figcaption>
                     </figure>
                 </div>
-                <figure className="rounded-xl border p-2 flex flex-col items-center">
-                    <img src={options[index].oursSrc} alt="Ours" className="rounded-lg max-w-full object-contain"/>
-                    <figcaption className="mt-2 text-center text-xs">Ours</figcaption>
+                <figure className="rounded-xl border p-3 flex flex-col items-center justify-center text-center">
+                    <img src={options[index].oursSrc} alt="Ours"
+                         className="rounded-lg max-h-60 w-full object-contain"/>
+                    <figcaption className="mt-2 text-xs">Ours</figcaption>
                 </figure>
             </div>
             <input
@@ -44,12 +45,27 @@ export default function HistogramSlider({before, options}: HistogramSliderProps)
                 onChange={(e) => setIndex(parseInt(e.target.value))}
                 className="w-full"
             />
-            <div className="flex justify-between text-xs mt-1">
-                {options.map((opt, i) => (
-                    <span key={opt.label} className={i === index ? 'font-semibold' : ''}>
-            {opt.label}
-          </span>
-                ))}
+            <div className="relative mt-2 h-6 text-xs">
+                {options.map((opt, i) => {
+                    const percent = options.length > 1 ? (i / (options.length - 1)) * 100 : 0;
+                    const translate =
+                        i === 0
+                            ? "translateX(0%)"
+                            : i === options.length - 1
+                                ? "translateX(-100%)"
+                                : "translateX(-50%)";
+                    const alignment =
+                        i === 0 ? "text-left" : i === options.length - 1 ? "text-right" : "text-center";
+                    return (
+                        <span
+                            key={opt.label}
+                            className={`${i === index ? "font-semibold" : ""} ${alignment} absolute top-0 whitespace-nowrap`}
+                            style={{ left: `${percent}%`, transform: translate }}
+                        >
+                            {opt.label}
+                        </span>
+                    );
+                })}
             </div>
         </div>
     );

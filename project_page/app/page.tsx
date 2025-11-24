@@ -44,10 +44,11 @@ interface Author {
 interface Affiliation {
     id: number;
     name: string;
+    url?: string;
 }
 
 const affiliations: Affiliation[] = [
-    {id: 1, name: "University of Birmingham, UK"},
+    {id: 1, name: "MIX Group, University of Birmingham, UK", url: "https://mix.jianbojiao.com/"},
     {id: 2, name: "University of Cambridge, UK"},
 ];
 
@@ -222,7 +223,19 @@ export default function VisualSplitPage() {
                     <p className="text-xs sm:text-sm">
                         {affiliations.map((aff, idx) => (
                             <span key={aff.id}>
-                                <sup>{aff.id}</sup> {aff.name}
+                                <sup>{aff.id}</sup>{" "}
+                                {aff.url ? (
+                                    <a
+                                        href={aff.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="underline hover:underline"
+                                    >
+                                        {aff.name}
+                                    </a>
+                                ) : (
+                                    aff.name
+                                )}
                                 {idx < affiliations.length - 1 && " · "}
                             </span>
                         ))}
@@ -600,25 +613,25 @@ export default function VisualSplitPage() {
                             engineering.
                         </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                            <figure className="rounded-xl border p-2">
+                            <figure className="rounded-xl border p-3 flex flex-col items-center justify-center text-center">
                                 <img src={appAssets.editingEdgeColour} alt="Edge map"
-                                     className="w-full object-cover rounded-lg"/>
-                                <figcaption className="mt-2 text-center text-xs">Edge</figcaption>
+                                     className="rounded-lg max-h-60 w-full object-contain"/>
+                                <figcaption className="mt-2 text-xs">Edge</figcaption>
                             </figure>
-                            <figure className="rounded-xl border p-2">
+                            <figure className="rounded-xl border p-3 flex flex-col items-center justify-center text-center">
                                 <img src={appAssets.editingSegColourOrig} alt="Colour map (Original)"
-                                     className="w-full object-cover rounded-lg"/>
-                                <figcaption className="mt-2 text-center text-xs">Colour Map (Original)</figcaption>
+                                     className="rounded-lg max-h-60 w-full object-contain"/>
+                                <figcaption className="mt-2 text-xs">Colour Map (Original)</figcaption>
                             </figure>
-                            <figure className="rounded-xl border p-2">
+                            <figure className="rounded-xl border p-3 flex flex-col items-center justify-center text-center">
                                 <img src={appAssets.editingSegColourEdited} alt="Colour map (Edited)"
-                                     className="w-full object-cover rounded-lg"/>
-                                <figcaption className="mt-2 text-center text-xs">Colour Map (Edited)</figcaption>
+                                     className="rounded-lg max-h-60 w-full object-contain"/>
+                                <figcaption className="mt-2 text-xs">Colour Map (Edited)</figcaption>
                             </figure>
-                            <figure className="rounded-xl border p-2">
+                            <figure className="rounded-xl border p-3 flex flex-col items-center justify-center text-center">
                                 <img src={appAssets.editingHistColour} alt="Gray-level histogram"
-                                     className="w-full object-cover rounded-lg"/>
-                                <figcaption className="mt-2 text-center text-xs">Gray-Level Histogram</figcaption>
+                                     className="rounded-lg max-h-60 w-full object-contain"/>
+                                <figcaption className="mt-2 text-xs">Gray-Level Histogram</figcaption>
                             </figure>
                         </div>
                         <div className="mb-6">
