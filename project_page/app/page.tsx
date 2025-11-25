@@ -689,6 +689,16 @@ export default function VisualSplitPage() {
 
                 {/* Footer */}
                 <footer className="border-t pt-6 text-center text-sm text-gray-500">
+                    <p className="mb-2">
+                        Want this template? Visit{" "}
+                        <a href="https://github.com/HenryQUQ/NextJS-Project-Page" className="underline">
+                            https://github.com/HenryQUQ/NextJS-Project-Page
+                        </a>{" "}
+                        and see the demo at{" "}
+                        <a href="https://chenyuanqu.com/NextJS-Project-Page" className="underline">
+                            https://chenyuanqu.com/NextJS-Project-Page
+                        </a>.
+                    </p>
                     <p>
                         &copy; 2025 VisualSplit. This page is an unofficial summary for the
                         BMVC 2025 paper. Replace placeholders with your final assets and
